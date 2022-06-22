@@ -5,7 +5,7 @@ import notifee from '@notifee/react-native';
 
 messaging().onMessage(async (msg) => {
     console.log('MSG -> ', msg);
-    await notifee.displayNotification({
+    notifee.displayNotification({
         title: 'Notifee Title',
         body: 'Notifee Body',
         android: {
@@ -22,20 +22,23 @@ messaging().onMessage(async (msg) => {
 });
 messaging().setBackgroundMessageHandler(async (msg) => {
     console.log('MSG 2 -> ', msg);
-    await notifee.displayNotification({
-        title: 'Notifee Title',
-        body: 'Notifee Body',
-        android: {
-            pressAction: {
-                id: 'default',
+    notifee
+        .displayNotification({
+            title: 'Notifee Title',
+            body: 'Notifee Body',
+            android: {
+                pressAction: {
+                    id: 'default',
+                },
+                channelId: 'cucaracha',
+                sound: 'notification_cucaracha',
             },
-            channelId: 'cucaracha',
-            sound: 'notification_cucaracha',
-        },
-        ios: {
-            sound: 'notificationcucaracha.wav',
-        },
-    });
+            ios: {
+                sound: 'notificationcucaracha.wav',
+            },
+        })
+        .then((displayed) => console.log({ displayed }))
+        .catch((displayedError) => console.log({ displayedError }));
 });
 
 export default function App() {
@@ -54,4 +57,3 @@ export default function App() {
 
     return <Text>Frontpage</Text>;
 }
-
